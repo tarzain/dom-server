@@ -16,7 +16,7 @@
         UUID            = require('node-uuid'),
 
         verbose         = false,
-        app             = express.createServer();
+        app             = express();
 
 /* Express server set up. */
 
