@@ -9,6 +9,7 @@
 */
 
     var
+        http            = require('http');
         gameport        = process.env.PORT || 80,
 
         io              = require('socket.io'),
@@ -25,33 +26,38 @@
 //and will serve any file the user requests from the root of your web server (where you launch the script from)
 //so keep this in mind - this is not a production script but a development teaching tool.
 
+//This is experimental code from the internet BEWARE
+server = http.createServer(app);
+
+//end experimental code
         //Tell the server to listen for incoming connections
-    app.listen( gameport );
+    //app.listen( gameport );
 
         //Log something so we know that it succeeded.
-    console.log('\t :: Express :: Listening on port ' + gameport );
+    //console.log('\t :: Express :: Listening on port ' + gameport );
 
         //By default, we forward the / path to index.html automatically.
-    app.get( '/', function( req, res ){
-        res.sendfile( __dirname + '/index.html' );
-    });
+    //app.get( '/', function( req, res ){
+    //    res.sendfile( __dirname + '/index.html' );
+    //});
 
 
         //This handler will listen for requests on /*, any file from the root of our server.
         //See expressjs documentation for more info on routing.
 
-    app.get( '/*' , function( req, res, next ) {
+    // app.get( '/*' , function( req, res, next ) {
 
-            //This is the current file they have requested
-        var file = req.params[0];
+    //         //This is the current file they have requested
+    //     var file = req.params[0];
 
-            //For debugging, we can track what files are requested.
-        if(verbose) console.log('\t :: Express :: file requested : ' + file);
+    //         //For debugging, we can track what files are requested.
+    //     if(verbose) console.log('\t :: Express :: file requested : ' + file);
 
-            //Send the requesting client the file.
-        res.sendfile( __dirname + '/' + file );
+    //         //Send the requesting client the file.
+    //     res.sendfile( __dirname + '/' + file );
 
-    }); //app.get *
+    // }); 
+    //app.get *
 
 
 /* Socket.IO server set up. */
@@ -60,7 +66,9 @@
 //This way, when the client requests '/socket.io/' files, socket.io determines what the client needs.
         
         //Create a socket.io instance using our express server
-    var sio = io.listen(app);
+    var sio = io.listen(server);
+
+    server.listen(5000);
 
         //Configure the socket.io connection settings.
         //See http://socket.io/
@@ -112,6 +120,14 @@
                 //we can tell the game server to update that game state.
 
         }); //client.on disconnect
+
+        client.on('location', function (data) {
+            client.broadcast.emit(data);
+            console.log(data);
+        });
+        client.on("name", function(data){
+            console.log(data);
+        });
      
     }); //sio.sockets.on connection
 
