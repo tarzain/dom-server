@@ -133,10 +133,13 @@ server = http.createServer(app);
         }); //client.on disconnect
 
 				
-				//when a player moves, tell everyone
-        client.on('location', function (data) {
-            client.broadcast.emit('onserverupdate', data);
-            console.log("location listener", data);
+				//when a player moves, update the server copy of data and tell everyone
+        client.on('updatePosition', function (data) {
+            client.broadcast.emit('onplayermovement', data);
+						clients[client.userid].x = data.x;
+						clients[client.userid].y = data.y;
+						clients[client.userid].z = data.z;
+            console.log(data);
         });
         client.on("name", function(data){
             console.log(data);
