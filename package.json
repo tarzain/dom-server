@@ -9,7 +9,8 @@
     "express": "3.0.0rc4",
     "jade": "*",
     "socket.io": "*",
-    "node-uuid": "*"
+    "node-uuid": "*",
+    "http": "*"
   },
   "subdomain": "zan2434.dom",
   "engines": {
