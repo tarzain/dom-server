@@ -135,9 +135,9 @@
 					.2, // medium friction
 					.3 // low restitution
 				);
-				player = new Physijs.SphereMesh (
-					new THREE.SphereGeometry( 10, 32, 16 ),
-					new THREE.MeshLambertMaterial( {color: 0x88ffff}), 5
+				player = new Physijs.BoxMesh (
+					new THREE.CubeGeometry(10, 10, 10),
+					player_physijs_material, 5
 				);
 				player.position.set(400, 500, 300);				
 				player.castShadow = true;
@@ -204,10 +204,10 @@
             var bodyImg = new Image();
             bodyImg.onload = function() {
               // add each 3D DOM object to the scene, handling conversions between coordinate systems.
-              gray_material = new THREE.MeshBasicMaterial({color: 0x555555});
               function addObjectAtIndex(i) {
                 var o = objects[i];
 
+                var gray_material = new THREE.MeshBasicMaterial({color: 0x555555});
                 var cropped_url = dataURLWithCroppedImage(bodyImg, o.x, o.y, o.width, o.height);
               
                 var croppedImage = new Image();
