@@ -64,14 +64,18 @@ server = http.createServer(app);
 
 //Express and socket.io can work together to serve the socket.io client files for you.
 //This way, when the client requests '/socket.io/' files, socket.io determines what the client needs.
-        
-        //Create a socket.io instance using our express server
+    
+		//store the full list of clients, hashed by id
+		var clients = {};
+		var numberOfClients = 0;
+		
+    //Create a socket.io instance using our express server
     var sio = io.listen(server);
 
     server.listen(5000);
 
-        //Configure the socket.io connection settings.
-        //See http://socket.io/
+    //Configure the socket.io connection settings.
+    //See http://socket.io/
     sio.configure(function (){
 
         sio.set('log level', 0);
@@ -87,18 +91,22 @@ server = http.createServer(app);
         //as well as give that client a unique ID to use so we can
         //maintain the list if players.
     sio.sockets.on('connection', function (client) {
-        
             //Generate a new UUID, looks something like
             //5b2ca132-64bd-4513-99da-90e838ca47d1
             //and store this on their socket/connection
         client.userid = UUID();
 
-            //tell the player they connected, giving them their id
-        client.emit('onconnected', { id: client.userid } );
-
-            //Useful to know when someone connects
-        console.log('\t socket.io:: player ' + client.userid + ' connected');
-        
+            //tell the player they connected, giving them their id and the list of clients
+        client.emit('onconnected', { 'id': client.userid, 'clients': clients } );
+        console.log(client.userid + ' connected. ' + ++numberOfClients + ' clients'); //Useful to know when someone connects
+										
+						//when the player responds back with position data, add to clients and tell everyone else
+				client.on('verifiedconnection', function(data){
+					clients[client.userid] = {'id': client.userid, 'x':data.x, 'y':data.y, 'z':data.z };
+					client.broadcast.emit('onnewconnection', clients[client.userid] );
+					
+					console.log('\t -> Verified connection. Position is (' + data.x + ', ' + data.y + ', ' + data.z + ')'); //Useful to know when verified
+				});
 
             //Now we want to handle some of the messages that clients will send.
             //They send messages here, and we send them to the game_server to handle.
@@ -112,18 +120,23 @@ server = http.createServer(app);
             //about that as well, so it can remove them from the game they are
             //in, and make sure the other player knows that they left and so on.
         client.on('disconnect', function () {
-
+								//remove client from clients list
+						delete clients[client.userid];
+								//tell everyone that a player has disconnected
+						client.broadcast.emit("ondisconnection", client.userid);
                 //Useful to know when soomeone disconnects
-            console.log('\t socket.io:: client disconnected ' + client.userid);
+            console.log(client.userid + ' disconnected. ' + --numberOfClients + ' remaining' );
             
                 //If the client was in a game, set by game_server.findGame,
                 //we can tell the game server to update that game state.
 
         }); //client.on disconnect
 
+				
+				//when a player moves, tell everyone
         client.on('location', function (data) {
-            client.broadcast.emit(data);
-            console.log(data);
+            client.broadcast.emit('onserverupdate', data);
+            console.log("location listener", data);
         });
         client.on("name", function(data){
             console.log(data);
