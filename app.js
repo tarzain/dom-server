@@ -72,14 +72,15 @@ server = http.createServer(app);
       sio.set("transports", ["xhr-polling"]); 
       sio.set("polling duration", 10); 
     });
-
+    console.log("sio is now configured to poll every 10 ms");
     server.listen(port);
+    console.log("server is now listening on port:"+port);
 
         //Configure the socket.io connection settings.
         //See http://socket.io/
     sio.configure(function (){
 
-        sio.set('log level', 0);
+        sio.set('log level', 3);
 
         sio.set('authorization', function (handshakeData, callback) {
           callback(null, true); // error first callback style
