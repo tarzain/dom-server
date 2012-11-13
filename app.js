@@ -10,7 +10,7 @@
 
     var
         http            = require('http');
-        gameport        = process.env.PORT || 35350,
+        port        = process.env.PORT || 3000,
 
         io              = require('socket.io'),
         express         = require('express'),
@@ -72,7 +72,7 @@ server = http.createServer(app);
         //Create a socket.io instance using our express server
     var sio = io.listen(server);
 
-    //server.listen(35350);
+    server.listen(port);
 
         //Configure the socket.io connection settings.
         //See http://socket.io/
