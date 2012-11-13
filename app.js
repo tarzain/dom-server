@@ -27,10 +27,7 @@
 //so keep this in mind - this is not a production script but a development teaching tool.
 
 //This is experimental code from the internet BEWARE
-io.configure(function () { 
-  io.set("transports", ["xhr-polling"]); 
-  io.set("polling duration", 10); 
-});
+
 server = http.createServer(app);
 
 //end experimental code
@@ -71,6 +68,10 @@ server = http.createServer(app);
         
         //Create a socket.io instance using our express server
     var sio = io.listen(server);
+    sio.configure(function () { 
+      sio.set("transports", ["xhr-polling"]); 
+      sio.set("polling duration", 10); 
+    });
 
     server.listen(port);
 
