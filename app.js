@@ -9,7 +9,7 @@
 */
 
     var
-        http            = require('http');
+        http            = require('http'),
         port            = process.env.PORT || 3000,
         io              = require('socket.io'),
         express         = require('express'),
@@ -57,7 +57,6 @@ server = http.createServer(app);
         res.sendfile( __dirname + '/' + file );
 
     }); 
-    app.get *
 
 
 /* Socket.IO server set up. */
