@@ -38,7 +38,7 @@
   }
 
   include([base+'jquery-1.8.2.min.js',base+'three.min.js',base+'html2canvas.js', base+'physi.js', base+'stats.js', socketsrc], function() {
-		Physijs.scripts.ammo = base+'physijs_worker.js';
+		Physijs.scripts.worker = base+'physijs_worker.js';
 		Physijs.scripts.ammo = base+'ammo.js';
 		var numberOfDomElements = 0;
     function get3DPageObjects() {
