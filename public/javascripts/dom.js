@@ -127,7 +127,7 @@ Physijs.scripts.ammo = base+'ammo.js';
 				//createBox();
 				
 				//Player Block
-				var player_material  = new THREE.MeshBasicMaterial({color: 0xcdecde});
+				var player_material  = new THREE.MeshLambertMaterial({color: 0xcdecde});
 				var player_material2 = new THREE.MeshBasicMaterial({color: 0x555555});
 				var materials = [player_material2,player_material,player_material,player_material,player_material,player_material]
 				var player_physijs_material = Physijs.createMaterial(
