@@ -137,7 +137,7 @@
 				);
 				player = new Physijs.SphereMesh (
 					new THREE.SphereGeometry( 10, 32, 16 ),
-					new THREE.MeshLambertMaterial( {color: 0x88ffff}), 5
+					new THREE.MeshLambertMaterial( {color: 0x88ffff*Math.random()}), 5
 				);
 				player.position.set(400, 500, 300);				
 				player.castShadow = true;
@@ -245,17 +245,17 @@
             $(renderer.domElement).css('position','fixed').css('left','0').css('top','0').css('background-color','#333');
 						
 						//stats box
-						render_stats = new Stats();
-						render_stats.domElement.style.position = 'absolute';
-						render_stats.domElement.style.top = '0px';
-						render_stats.domElement.style.zIndex = 100;
-						document.getElementsByTagName('body')[0].appendChild( render_stats.domElement );
+						// render_stats = new Stats();
+						// render_stats.domElement.style.position = 'absolute';
+						// render_stats.domElement.style.top = '0px';
+						// render_stats.domElement.style.zIndex = 100;
+						// document.getElementsByTagName('body')[0].appendChild( render_stats.domElement );
 						
-						physics_stats = new Stats();
-						physics_stats.domElement.style.position = 'absolute';
-						physics_stats.domElement.style.top = '50px';
-						physics_stats.domElement.style.zIndex = 100;
-						document.getElementsByTagName('body')[0].appendChild( physics_stats.domElement );
+						// physics_stats = new Stats();
+						// physics_stats.domElement.style.position = 'absolute';
+						// physics_stats.domElement.style.top = '50px';
+						// physics_stats.domElement.style.zIndex = 100;
+						// document.getElementsByTagName('body')[0].appendChild( physics_stats.domElement );
 						
             threejs_animate();
 
