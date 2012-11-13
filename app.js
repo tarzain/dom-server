@@ -10,8 +10,8 @@
 
     var
         http            = require('http');
-        port        = process.env.PORT || 3000,
-
+        //port        = process.env.PORT || 3000,
+        port            = 3000;
         io              = require('socket.io'),
         express         = require('express'),
         UUID            = require('node-uuid'),
