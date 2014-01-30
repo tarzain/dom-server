@@ -1,12 +1,4 @@
-/*  Copyright (c) 2012 Sven "FuzzYspo0N" Bergström
-    
-    written by : http://underscorediscovery.com
-    written for : http://buildnewgames.com/real-time-multiplayer/
-    
-    MIT Licensed.
 
-    Usage : node app.js
-*/
 
     var
         http            = require('http'),
@@ -20,30 +12,11 @@
 
 /* Express server set up. */
 
-//The express server handles passing our content to the browser,
-//As well as routing users where they need to go. This example is bare bones
-//and will serve any file the user requests from the root of your web server (where you launch the script from)
-//so keep this in mind - this is not a production script but a development teaching tool.
 
-//This is experimental code from the internet BEWARE
 
 server = http.createServer(app);
 
-//end experimental code
-        //Tell the server to listen for incoming connections
-    //app.listen( gameport );
 
-        //Log something so we know that it succeeded.
-    //console.log('\t :: Express :: Listening on port ' + gameport );
-
-        //By default, we forward the / path to index.html automatically.
-    //app.get( '/', function( req, res ){
-    //    res.sendfile( __dirname + '/index.html' );
-    //});
-
-
-        //This handler will listen for requests on /*, any file from the root of our server.
-        //See expressjs documentation for more info on routing.
 
     app.get( '/*' , function( req, res, next ) {
 
